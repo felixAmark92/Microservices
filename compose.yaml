@@ -1,0 +1,18 @@
+﻿version: '3.9'
+
+services:
+  service-a:
+    build: ./ServiceA
+  
+  service-b:
+    build: ./ServiceB
+  rabbit-mq:
+    image: rabbitmq:4.0-management
+  
+  gateway:
+    build: ./Gateway
+    ports:
+      - "5003:8080"
+    depends_on:
+      - service-a
+      - service-b
