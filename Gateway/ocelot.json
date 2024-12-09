@@ -1,12 +1,12 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/service-a",
+      "DownstreamPathTemplate": "/api/service-a{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         { "Host": "service-a", "Port": 8080 }
       ],
-      "UpstreamPathTemplate": "/api/service-a",
+      "UpstreamPathTemplate": "/api/service-a{everything}",
       "UpstreamHttpMethod": [ "GET" ]
     },
     {

@@ -1,13 +1,13 @@
 ﻿version: '3.9'
 
 services:
+  rabbit-mq:
+    image: rabbitmq:4.0-management
   service-a:
     build: ./ServiceA
   
   service-b:
     build: ./ServiceB
-  rabbit-mq:
-    image: rabbitmq:4.0-management
   
   gateway:
     build: ./Gateway
