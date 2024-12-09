@@ -1,6 +1,15 @@
 {
   "Routes": [
     {
+      "DownstreamPathTemplate": "/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "service-a", "Port": 8080 }
+      ],
+      "UpstreamPathTemplate": "/",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
       "DownstreamPathTemplate": "/api/service-a{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -20,6 +29,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5003"
+    "BaseUrl": "http://gateway:8080"
   }
 }

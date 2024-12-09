@@ -5,13 +5,20 @@ using ServiceA;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSingleton<RabbitMqConnection>();
+builder.Services.AddScoped<RabbitMqProducer>();
+
 var app = builder.Build();
+var index = File.ReadAllText("index.html");
+
+app.MapGet("/index", ()=> Results.Content(index, "text/html"));
 
 app.MapGet("/api/service-a/hello", () => "Hello from service A");
 
-app.MapGet("/api/service-a/world", async () =>
+app.MapGet("/api/service-a/hello-to-b", async (RabbitMqProducer producer) =>
 {
-    return "WORLD";
+    await producer.SendMessage("Hello from service A");
+    return "Successfully sent log to service B";
 });
 
 app.Run();

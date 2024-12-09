@@ -1,4 +1,5 @@
 using System.Text;
+using System.Threading.Channels;
 using RabbitMQ.Client;
 
 namespace ServiceA;
@@ -14,10 +15,19 @@ public class RabbitMqProducer
 
     public async Task SendMessage(string message)
     {
-        var body = Encoding.UTF8.GetBytes(message);
-        if (_rabbitMqConnection.Channel == null) throw new Exception("RabbitMQ channel is null");
+        if (_rabbitMqConnection.Connection is null)
+            await _rabbitMqConnection.InitializeConnection();
+            
+        var factory = new ConnectionFactory { HostName = "rabbit-mq" };
+        await using var connection = await factory.CreateConnectionAsync();
+        await using var channel = await connection.CreateChannelAsync();
         
-        await _rabbitMqConnection.Channel.BasicPublishAsync(
+        await channel.QueueDeclareAsync(queue: "standard", durable: false, exclusive: false, 
+            autoDelete: true, arguments: null);
+        
+        var body = Encoding.UTF8.GetBytes(message);
+        
+        await channel.BasicPublishAsync(
             exchange: string.Empty, routingKey: "standard", body: body );
     }
 }

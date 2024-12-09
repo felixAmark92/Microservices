@@ -1,16 +1,32 @@
-﻿version: '3.9'
-
-services:
+﻿services:
   rabbit-mq:
     image: rabbitmq:4.0-management
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      
   service-a:
-    build: ./ServiceA
+    build:
+      context: .
+      dockerfile: ./ServiceA/Dockerfile
+    depends_on:
+      rabbit-mq:
+        condition: service_healthy
   
   service-b:
-    build: ./ServiceB
+    build:
+      context: .
+      dockerfile: ./ServiceB/Dockerfile
+    depends_on:
+      rabbit-mq:
+        condition: service_healthy
   
   gateway:
-    build: ./Gateway
+    build:
+      context: .
+      dockerfile: ./Gateway/Dockerfile
     ports:
       - "5003:8080"
     depends_on:
