@@ -23,6 +23,14 @@
       rabbit-mq:
         condition: service_healthy
   
+  api-orders:
+    build:
+      context: .
+      dockerfile: ./ApiService.Orders/Dockerfile
+    depends_on:
+      rabbit-mq:
+       condition: service_healthy
+       
   gateway:
     build:
       context: .
