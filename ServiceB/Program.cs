@@ -18,11 +18,12 @@ var connection = await factory.CreateConnectionAsync();
 await using var channel = await connection.CreateChannelAsync();
 await channel.QueueDeclareAsync("standard", exclusive: false, autoDelete: true);
 var consumer = new AsyncEventingBasicConsumer(channel);
-consumer.ReceivedAsync += async (model, ea) =>
+consumer.ReceivedAsync += (model, ea) =>
 {
     var body = ea.Body.ToArray();
     var message = Encoding.UTF8.GetString(body);
     Console.WriteLine(message);
+    return Task.CompletedTask;
 };
 await channel.BasicConsumeAsync(queue: "standard", autoAck: true, consumer: consumer);
 
