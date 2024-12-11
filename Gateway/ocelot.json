@@ -1,6 +1,15 @@
 {
   "Routes": [
     {
+      "DownstreamPathTemplate": "/inventory{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "inventory-service", "Port": 8080 }
+      ],
+      "UpstreamPathTemplate": "/inventory{everything}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
       "DownstreamPathTemplate": "/index",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [

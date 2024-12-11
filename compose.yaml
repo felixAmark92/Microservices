@@ -32,3 +32,25 @@
     depends_on:
       - service-a
       - service-b
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "SuperSafePass.123"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - sqlserver_data:/var/opt/mssqlMyDatabase
+
+  inventory-service:
+    build:
+      context: InventoryService
+      dockerfile: Dockerfile
+    depends_on:
+      - sqlserver
+    environment:
+      InventoryService_ConnectionString: "Server=sqlserver;Database=MyDatabase;User Id=sa;Password=SuperSafePass.123;TrustServerCertificate=True;"
+
+volumes:
+  sqlserver_data:
