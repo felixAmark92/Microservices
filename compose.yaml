@@ -7,6 +7,14 @@
       timeout: 3s
       retries: 5
   
+  feedback-service:
+    build:
+      context: .
+      dockerfile: ./FeedbackService/Dockerfile
+    depends_on:
+      rabbit-mq:
+        condition: service_healthy
+        
   api-orders:
     build:
       context: OrdersService
