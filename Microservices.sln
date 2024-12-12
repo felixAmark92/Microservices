@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceB", "ServiceB\Servic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gateway", "Gateway\Gateway.csproj", "{1C74A991-0AFD-463E-8E07-4A302E28E1A3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiService.Orders", "ApiService.Orders\ApiService.Orders.csproj", "{65263BC5-98BA-4A16-8CCA-907EFDF750FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository.Orders", "Repository.Orders\Repository.Orders.csproj", "{227A9EC1-4E82-4B15-A6BB-2D9906E6764C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,5 +33,13 @@ Global
 		{1C74A991-0AFD-463E-8E07-4A302E28E1A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1C74A991-0AFD-463E-8E07-4A302E28E1A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1C74A991-0AFD-463E-8E07-4A302E28E1A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65263BC5-98BA-4A16-8CCA-907EFDF750FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65263BC5-98BA-4A16-8CCA-907EFDF750FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65263BC5-98BA-4A16-8CCA-907EFDF750FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65263BC5-98BA-4A16-8CCA-907EFDF750FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{227A9EC1-4E82-4B15-A6BB-2D9906E6764C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{227A9EC1-4E82-4B15-A6BB-2D9906E6764C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{227A9EC1-4E82-4B15-A6BB-2D9906E6764C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{227A9EC1-4E82-4B15-A6BB-2D9906E6764C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -8,6 +8,15 @@
       ],
       "UpstreamPathTemplate": "/",
       "UpstreamHttpMethod": [ "GET" ]
+    }, 
+    {
+      "DownstreamPathTemplate": "/api/orders",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "api-orders", "Port": 8080 }
+      ],
+      "UpstreamPathTemplate": "/api/orders",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
     },
     {
       "DownstreamPathTemplate": "/api/service-a{everything}",
