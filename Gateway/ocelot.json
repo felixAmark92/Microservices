@@ -9,15 +9,7 @@
       "UpstreamPathTemplate": "/inventory{everything}",
       "UpstreamHttpMethod": [ "GET" ]
     },
-    {
-      "DownstreamPathTemplate": "/index",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        { "Host": "service-a", "Port": 8080 }
-      ],
-      "UpstreamPathTemplate": "/",
-      "UpstreamHttpMethod": [ "GET" ]
-    }, 
+
     {
       "DownstreamPathTemplate": "/api/orders",
       "DownstreamScheme": "http",
@@ -27,6 +19,12 @@
       "UpstreamPathTemplate": "/api/orders",
       "UpstreamHttpMethod": [ "GET", "POST" ]
     },
+    
+    
+    
+    
+    
+    
     {
       "DownstreamPathTemplate": "/api/service-a{everything}",
       "DownstreamScheme": "http",
@@ -43,6 +41,15 @@
         { "Host": "service-b", "Port": 8080}
       ],
       "UpstreamPathTemplate": "/api/service-b",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/index",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        { "Host": "service-a", "Port": 8080 }
+      ],
+      "UpstreamPathTemplate": "/",
       "UpstreamHttpMethod": [ "GET" ]
     }
   ],
