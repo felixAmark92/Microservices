@@ -17,9 +17,9 @@
 
   feedback-service:
     build:
-      context: FeedbackService
+      context: Feedback
     depends_on:
-      - sqlserver
+      - feedbacksql
        
   gateway:
     build:
