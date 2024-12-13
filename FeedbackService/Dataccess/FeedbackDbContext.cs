@@ -5,7 +5,6 @@ namespace Dataccess
 {
     public class FeedbackDbContext : DbContext
     {
-        public FeedbackDbContext() { }
         public FeedbackDbContext(DbContextOptions options) : base(options)
         {
         }
