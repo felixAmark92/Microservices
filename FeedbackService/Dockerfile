@@ -7,6 +7,7 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["FeedbackService/FeedbackService.csproj", "FeedbackService/"]
+COPY ["Dataccess/Dataccess.csproj", "Dataccess/"]
 RUN dotnet restore "FeedbackService/FeedbackService.csproj"
 COPY . .
 WORKDIR "/src/FeedbackService"
