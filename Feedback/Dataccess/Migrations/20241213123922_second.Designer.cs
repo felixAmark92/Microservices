@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dataccess.Migrations
 {
     [DbContext(typeof(FeedbackDbContext))]
-    [Migration("20241212142636_init")]
-    partial class init
+    [Migration("20241213123922_second")]
+    partial class second
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

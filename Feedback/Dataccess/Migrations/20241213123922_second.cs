@@ -5,7 +5,7 @@
 namespace Dataccess.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class second : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
