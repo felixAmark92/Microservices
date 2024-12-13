@@ -5,7 +5,7 @@ using WebShop.UnitOfWork;
 namespace InventoryService.DataAccess.Repositories;
 
 public abstract class BaseRepository<TModel, TId> 
-    : IRepository<TModel, TId> where TModel : class, IModel<TId>
+    : IRepository<TModel, TId> where TModel : class, IEntity<TId>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly InventoryDbContext _context;

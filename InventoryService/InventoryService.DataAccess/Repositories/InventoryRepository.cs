@@ -3,7 +3,7 @@ using WebShop.UnitOfWork;
 
 namespace InventoryService.DataAccess.Repositories;
 
-public class InventoryRepository : BaseRepository<InventoryModel, int>, IInventoryRepository
+public class InventoryRepository : BaseRepository<InventoryEntity, int>, IInventoryRepository
 {
     private readonly InventoryDbContext _context;
     private readonly IUnitOfWork _unitOfWork;
@@ -15,31 +15,31 @@ public class InventoryRepository : BaseRepository<InventoryModel, int>, IInvento
         _context = context;
     }
 
-    public void AddToInventory(InventoryModel inventory, int quantity)
+    public void AddToInventoryQuantity(InventoryEntity inventory, int quantity)
     {
         Action operation = () =>
         {
-            inventory.InventoryAmount += quantity;
-            _context.Set<InventoryModel>().Update(inventory);
+            inventory.Quantity += quantity;
+            _context.Set<InventoryEntity>().Update(inventory);
         };
         _unitOfWork.AddOperation(operation);
     }
 
-    public void RemoveFromInventory(InventoryModel inventory, int quantity)
+    public void RemoveFromInventoryQuantity(InventoryEntity inventory, int quantity)
     {
         Action operation = () =>
         {
-            inventory.InventoryAmount -= quantity;
-            if (inventory.InventoryAmount < 0) 
+            inventory.Quantity -= quantity;
+            if (inventory.Quantity < 0) 
                 throw new NullReferenceException("Inventory amount cannot be negative");
                 
-            _context.Set<InventoryModel>().Update(inventory);
+            _context.Set<InventoryEntity>().Update(inventory);
         };
         _unitOfWork.AddOperation(operation);
     }
 
-    public InventoryModel? GetInventoryByProductId(int productId)
+    public InventoryEntity? GetInventoryByProductId(int productId)
     {
-        return _context.Set<InventoryModel>().FirstOrDefault(i => i.ProductId == productId);
+        return _context.Set<InventoryEntity>().FirstOrDefault(i => i.ProductId == productId);
     }
 }

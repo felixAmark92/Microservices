@@ -7,9 +7,8 @@
         { "Host": "inventory-service", "Port": 8080 }
       ],
       "UpstreamPathTemplate": "/inventory{everything}",
-      "UpstreamHttpMethod": [ "GET" ]
+      "UpstreamHttpMethod": [ "POST" ]
     },
-
     {
       "DownstreamPathTemplate": "/api/orders",
       "DownstreamScheme": "http",
@@ -19,12 +18,6 @@
       "UpstreamPathTemplate": "/api/orders",
       "UpstreamHttpMethod": [ "GET", "POST" ]
     },
-    
-    
-    
-    
-    
-    
     {
       "DownstreamPathTemplate": "/api/service-a{everything}",
       "DownstreamScheme": "http",

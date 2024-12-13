@@ -1,6 +1,6 @@
 namespace WebShop.Repositories;
 
-public interface IRepository<TModel, in TId> where TModel : class, IModel<TId>
+public interface IRepository<TModel, in TId> where TModel : class, IEntity<TId>
 {
       void Add(TModel model);
       IEnumerable<TModel> GetAll();

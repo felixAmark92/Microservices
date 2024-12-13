@@ -1,6 +1,6 @@
 namespace WebShop;
 
-public interface IModel<TId>
+public interface IEntity<TId>
 {
     public TId Id { get; set; } 
 }

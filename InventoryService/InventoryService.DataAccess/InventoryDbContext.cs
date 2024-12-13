@@ -6,7 +6,7 @@ namespace InventoryService.DataAccess;
 public class InventoryDbContext : DbContext
 {
     public InventoryDbContext(DbContextOptions<InventoryDbContext> options) : base(options) { }
-    public DbSet<InventoryModel> Inventories { get; set; }
+    public DbSet<InventoryEntity> Inventories { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

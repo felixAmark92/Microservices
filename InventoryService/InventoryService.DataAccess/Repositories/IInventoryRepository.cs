@@ -3,9 +3,9 @@ using WebShop.Repositories;
 
 namespace InventoryService.DataAccess.Repositories;
 
-public interface IInventoryRepository : IRepository<InventoryModel, int>
+public interface IInventoryRepository : IRepository<InventoryEntity, int>
 {
-    void AddToInventory(InventoryModel inventory, int quantity );
-    void RemoveFromInventory(InventoryModel inventory, int quantity );
-    InventoryModel? GetInventoryByProductId(int productId);
+    void AddToInventoryQuantity(InventoryEntity inventory, int quantity );
+    void RemoveFromInventoryQuantity(InventoryEntity inventory, int quantity );
+    InventoryEntity? GetInventoryByProductId(int productId);
 }
