@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "SuperSafePass123"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - sqlserver_data:/var/opt/mssqlMyDatabase
+
+  productservice:
+    build:
+      context: .
+      dockerfile: src/Backend/SmartCafeteria.ProductMicroservice.Api/Dockerfile
+    container_name: ProductMicroservice
+    ports:
+      - "8080:8080"  # HTTP
+    depends_on:
+      - sqlserver
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=sqlserver;Database=MyDatabase;User Id=sa;Password=SuperSafePass123;TrustServerCertificate=True;"
+
+volumes:
+  sqlserver_data:
