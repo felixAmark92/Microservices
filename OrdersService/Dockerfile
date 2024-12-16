@@ -6,7 +6,7 @@ EXPOSE 5003
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["ApiService.Orders/ApiService.Orders.csproj", "ApiService.Orders/"]
+COPY ["OrdersService/ApiService.Orders/ApiService.Orders.csproj", "ApiService.Orders/"]
 RUN dotnet restore "ApiService.Orders/ApiService.Orders.csproj"
 COPY . .
 WORKDIR "/src/ApiService.Orders"

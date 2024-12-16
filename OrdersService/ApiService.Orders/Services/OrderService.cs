@@ -11,11 +11,11 @@ interface IOrderService<T> where T : class
     Task<T> GetOrderByIdAsync(string id);
 }
 
-public class OrderService(): IOrderService<OrderDto>
+public class OrderService(MqProducer mqProducer): IOrderService<OrderDto>
 {
     public async Task AddAsync(OrderDto dto)
     {
-        throw new NotImplementedException();
+        await mqProducer.PublishMessage(dto.ToString(), "orders.create");
     }
 
     public async Task UpdateAsync(OrderDto dto)
