@@ -1,5 +1,5 @@
-using InventoryService.Api.RabbitMqServices;
-using InventoryService.Api.Service;
+using InventoryService.Api.Services;
+using InventoryService.Api.Services.RabbitMqServices;
 using InventoryService.DataAccess;
 using InventoryService.DataAccess.Repositories;
 
@@ -14,7 +14,8 @@ public static class ServiceCollectionExtensions
             .AddScoped<IInventoryRepository, InventoryRepository>()
             .AddSingleton<RabbitMqConnection>()
             .AddScoped<RabbitMqProducer>()
-            .AddScoped<IInventoryService, Service.InventoryService>();
+            .AddScoped<IInventoryService, Services.InventoryService>()
+            .AddOpenApi();
             
         return services;
     }

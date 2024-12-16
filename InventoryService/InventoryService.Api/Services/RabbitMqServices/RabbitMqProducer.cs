@@ -2,7 +2,7 @@ using System.Text;
 using System.Text.Json;
 using RabbitMQ.Client;
 
-namespace InventoryService.Api.RabbitMqServices;
+namespace InventoryService.Api.Services.RabbitMqServices;
 
 public class RabbitMqProducer
 {

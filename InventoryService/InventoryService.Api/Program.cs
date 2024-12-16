@@ -1,9 +1,10 @@
 using InventoryService.Api.Endpoints;
 using InventoryService.Api.Extensions;
-using InventoryService.Api.RabbitMqServices;
 using InventoryService.Api.Receivers;
+using InventoryService.Api.Services.RabbitMqServices;
 using InventoryService.DataAccess;
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 
 var loggerFactory = LoggerFactory.Create(builder =>
 {
@@ -27,6 +28,7 @@ builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 
+
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<InventoryDbContext>();
@@ -40,9 +42,18 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
+app.MapOpenApi();
+app.MapScalarApiReference();
 app.MapInventoryEndpoints();
+
 var rabbitConnection = app.Services.GetRequiredService<RabbitMqConnection>();
-await rabbitConnection.InitializeConnection();
+var success = await rabbitConnection.InitializeConnection();
+if (!success)
+{
+    logger.LogWarning("Starting application without RabbitMQ connection");
+    app.Run();
+    return;
+}
 await using var channel = await rabbitConnection.Connection!.CreateChannelAsync();
 var rabbitMqReceiver = new RabbitMqReceiver(channel);
 await app.MapRabbitMqReceiver(rabbitMqReceiver);

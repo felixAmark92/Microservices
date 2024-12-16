@@ -1,7 +1,6 @@
 using InventoryService.Api.Dtos;
-using InventoryService.DataAccess.Repositories;
 
-namespace InventoryService.Api.Service;
+namespace InventoryService.Api.Services;
 
 public interface IInventoryService
 {

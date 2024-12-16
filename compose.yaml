@@ -54,7 +54,8 @@
       - feedback-volume:/var/opt/mssql
 
   inventory-service:
-    build: InventoryService
+    image: felixamark/inventory-service
+    container_name: inventory-service
     depends_on:
       inventory-sql:
         condition: service_started
@@ -62,6 +63,8 @@
         condition: service_healthy
     environment:
       InventoryService_ConnectionString: "Server=inventory-sql;Database=InventoryDb;User Id=sa;Password=SuperSafePass.123;TrustServerCertificate=True;"
+    ports:
+      - "5001:8080"
     
   service-a:
     build:

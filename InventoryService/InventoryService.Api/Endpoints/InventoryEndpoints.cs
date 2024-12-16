@@ -1,5 +1,5 @@
 using InventoryService.Api.Dtos;
-using InventoryService.Api.Service;
+using InventoryService.Api.Services;
 using InventoryService.DataAccess.Repositories;
 
 namespace InventoryService.Api.Endpoints;
@@ -8,19 +8,21 @@ public static class InventoryEndpoints
 {
     public static WebApplication MapInventoryEndpoints(this WebApplication app)
     {
-        app.MapPost("/inventory/insert", (InventoryDto inventoryDto, IInventoryService inventoryService) => 
+        var group = app.MapGroup("/inventory");
+        
+        group.MapPost("/insert", (InventoryDto inventoryDto, IInventoryService inventoryService) => 
             inventoryService.AddInventory(inventoryDto));
         
-        app.MapGet("/inventory/{id}", (int id, IInventoryService inventoryService) => 
+        group.MapGet("/{id}", (int id, IInventoryService inventoryService) => 
             inventoryService.GetInventoryById(id));
         
-        app.MapGet("/inventory/all", (IInventoryService inventoryService) => 
+        group.MapGet("/all", (IInventoryService inventoryService) => 
             inventoryService.GetAllInventories());
         
-        app.MapPost("/inventory/remove-quantity", (InventoryDto inventoryDto, IInventoryService inventoryService)=>
+        group.MapPost("/remove-quantity", (InventoryDto inventoryDto, IInventoryService inventoryService)=>
             inventoryService.RemoveFromProductQuantity(inventoryDto));
         
-        app.MapPost("/inventory/add-quantity", (InventoryDto inventoryDto, IInventoryService inventoryService)=>
+        group.MapPost("/add-quantity", (InventoryDto inventoryDto, IInventoryService inventoryService)=>
             inventoryService.AddToProductQuantity(inventoryDto));
         
         return app;

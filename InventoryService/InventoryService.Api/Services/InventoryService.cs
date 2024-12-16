@@ -3,7 +3,7 @@ using InventoryService.DataAccess;
 using InventoryService.DataAccess.Entities;
 using InventoryService.DataAccess.Repositories;
 
-namespace InventoryService.Api.Service;
+namespace InventoryService.Api.Services;
 
 public class InventoryService : IInventoryService
 {
