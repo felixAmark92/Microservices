@@ -20,7 +20,7 @@ public static class InventoryReceivers
             var newProduct = GetMessageDeserialized<InventoryDto>(eventArgs);
             await inventoryService.AddInventory(newProduct);
         });
-        
+        //test
         return app;
     }
 
