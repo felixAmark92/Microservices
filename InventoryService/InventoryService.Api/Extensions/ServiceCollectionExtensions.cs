@@ -1,8 +1,7 @@
+using InventoryService.Api.RabbitMqServices;
 using InventoryService.Api.Service;
 using InventoryService.DataAccess;
 using InventoryService.DataAccess.Repositories;
-using ServiceA;
-using WebShop.UnitOfWork;
 
 namespace InventoryService.Api.Extensions;
 

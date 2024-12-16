@@ -1,4 +1,4 @@
-namespace WebShop.Repositories;
+namespace InventoryService.DataAccess;
 
 public interface IRepository<TModel, in TId> where TModel : class, IEntity<TId>
 {

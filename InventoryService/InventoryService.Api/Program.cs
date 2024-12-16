@@ -1,10 +1,9 @@
 using InventoryService.Api.Endpoints;
 using InventoryService.Api.Extensions;
-using InventoryService.Api.MessageQueue;
+using InventoryService.Api.RabbitMqServices;
 using InventoryService.Api.Receivers;
 using InventoryService.DataAccess;
 using Microsoft.EntityFrameworkCore;
-using ServiceA;
 
 var loggerFactory = LoggerFactory.Create(builder =>
 {

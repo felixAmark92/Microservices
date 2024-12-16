@@ -1,6 +1,4 @@
-﻿using WebShop.Repositories;
-
-namespace WebShop.UnitOfWork
+﻿namespace InventoryService.DataAccess
 {
     // Gränssnitt för Unit of Work
     public interface IUnitOfWork : IDisposable

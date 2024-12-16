@@ -1,8 +1,7 @@
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using ServiceA;
 
-namespace InventoryService.Api.MessageQueue;
+namespace InventoryService.Api.RabbitMqServices;
 
 public class RabbitMqReceiver
 {

@@ -1,8 +1,6 @@
+using InventoryService.Api.Dtos;
 using InventoryService.Api.Service;
-using InventoryService.DataAccess.Models;
 using InventoryService.DataAccess.Repositories;
-using InventoryService.Dtos;
-using WebShop.UnitOfWork;
 
 namespace InventoryService.Api.Endpoints;
 

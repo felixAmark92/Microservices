@@ -1,8 +1,8 @@
 using System.Text;
 using System.Text.Json;
-using InventoryService.Api.MessageQueue;
+using InventoryService.Api.Dtos;
+using InventoryService.Api.RabbitMqServices;
 using InventoryService.Api.Service;
-using InventoryService.Dtos;
 using Microsoft.AspNetCore.Http.HttpResults;
 using RabbitMQ.Client.Events;
 

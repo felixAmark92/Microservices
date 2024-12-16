@@ -1,9 +1,7 @@
 using System.Text;
-using System.Threading.Channels;
-using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Client;
 
-namespace ServiceA;
+namespace InventoryService.Api.RabbitMqServices;
 
 public class RabbitMqProducer
 {

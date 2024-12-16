@@ -1,6 +1,6 @@
 using RabbitMQ.Client;
 
-namespace ServiceA;
+namespace InventoryService.Api.RabbitMqServices;
 
 public class RabbitMqConnection : IDisposable, IAsyncDisposable
 {

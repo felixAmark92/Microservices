@@ -1,4 +1,4 @@
-namespace InventoryService.Dtos;
+namespace InventoryService.Api.Dtos;
 
 public record InventoryDto
 {

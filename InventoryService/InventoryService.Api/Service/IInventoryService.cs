@@ -1,5 +1,5 @@
+using InventoryService.Api.Dtos;
 using InventoryService.DataAccess.Repositories;
-using InventoryService.Dtos;
 
 namespace InventoryService.Api.Service;
 
