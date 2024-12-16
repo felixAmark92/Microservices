@@ -3,7 +3,6 @@ using System.Text.Json;
 using InventoryService.Api.Dtos;
 using InventoryService.Api.RabbitMqServices;
 using InventoryService.Api.Service;
-using Microsoft.AspNetCore.Http.HttpResults;
 using RabbitMQ.Client.Events;
 
 namespace InventoryService.Api.Receivers;
