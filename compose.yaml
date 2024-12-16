@@ -18,7 +18,7 @@
     build:
       context: FeedbackService
     depends_on:
-      - feedbacksql
+      - feedback-sql
     ports:
       - "5006:8080"
 
@@ -28,40 +28,43 @@
       dockerfile: ./Gateway/Dockerfile
     ports:
       - "5003:8080"
+    depends_on:
+      - feedback-service
+      - inventory-service
+      - api-orders
 
-  sqlserver:
+  inventory-sql:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: sqlserver
-    ports:
-      - "1433:1433"
+    container_name: inventory-sql
     environment:
       SA_PASSWORD: "SuperSafePass.123"
       ACCEPT_EULA: "Y"
     volumes:
-      - sqlserver_data:/var/opt/mssqlMyDatabase
+      - inventory_data:/var/opt/mssql/data
 
-  feedbacksql:
+  feedback-sql:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: feedbacksql
+    container_name: feedback-sql
     ports:
       - "1434:1433"
     environment:
       SA_PASSWORD: "SuperSafePass.123"
       ACCEPT_EULA: "Y"
     volumes:
-      - feedback-volume:/var/opt/mssqlMyDatabase
+      - feedback-volume:/var/opt/mssql
 
   inventory-service:
-    build:
-      context: InventoryService
-      dockerfile: Dockerfile
+    build: InventoryService
     depends_on:
-      - sqlserver
+      inventory-sql:
+        condition: service_started
+      rabbit-mq:
+        condition: service_healthy
     environment:
-      InventoryService_ConnectionString: "Server=sqlserver;Database=MyDatabase;User Id=sa;Password=SuperSafePass.123;TrustServerCertificate=True;"
+      InventoryService_ConnectionString: "Server=inventory-sql;Database=InventoryDb;User Id=sa;Password=SuperSafePass.123;TrustServerCertificate=True;"
 
 volumes:
-  sqlserver_data:
-  feedback-volume:
+  inventory_data: {}
+  feedback-volume: {}
 
 

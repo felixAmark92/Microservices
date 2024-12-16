@@ -22,7 +22,7 @@
         }
       ],
       "UpstreamPathTemplate": "/inventory{everything}",
-      "UpstreamHttpMethod": [ "POST" ]
+      "UpstreamHttpMethod": [ "GET","POST" ]
     },
     {
       "DownstreamPathTemplate": "/api/orders",
