@@ -1,4 +1,5 @@
 using System.Text;
+using ApiService.Orders.RabbitMqServices;
 using RabbitMQ.Client;
 
 namespace ApiService.Orders;
@@ -8,7 +9,7 @@ interface IMqProducer
     Task PublishMessage(string? message, string queueName);
 }
 
-public class MqProducer(RabbitMqContext rabbitMqContext) : IMqProducer
+public class MqProducer(IRabbitMqContext rabbitMqContext) : IMqProducer
 {
     public async Task PublishMessage(string? message, string queueName)
     {

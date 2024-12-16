@@ -1,7 +1,6 @@
 using RabbitMQ.Client;
 
-namespace WorkerService.Orders;
-
+namespace ApiService.Orders.RabbitMqServices;
 public interface IRabbitMqContext
 {
     IConnection? Connection { get; }

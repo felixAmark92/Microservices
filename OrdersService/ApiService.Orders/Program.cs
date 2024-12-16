@@ -1,6 +1,8 @@
 using ApiService.Orders;
 using ApiService.Orders.Dtos;
+using ApiService.Orders.RabbitMqServices;
 using ApiService.Orders.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,8 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSingleton<IRabbitMqContext, RabbitMqContext>();
+builder.Services.AddSingleton<OrderConsumerFactory>();
+builder.Services.AddSingleton<OrderConsumerManager>();
 builder.Services.AddScoped<IMqProducer, MqProducer>();
-
 builder.Services.AddScoped<IOrderService<OrderDto>, OrderService>();
 //builder.Services.AddScoped<IOrderRepository<OrderEntity>, OrderRepository>();
 
@@ -29,5 +32,7 @@ app.MapPost("/api/orders", async (OrderDto orderDto, IOrderService<OrderDto> ord
     return Results.Ok();
 });
 
+// var orderConsumerManager = new OrderConsumerManager(app.Services.GetRequiredService<OrderConsumerFactory>());
+// await orderConsumerManager.StartConsumers();
 app.Run();
 

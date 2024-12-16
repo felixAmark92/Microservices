@@ -9,7 +9,8 @@
 
   api-orders:
     build:
-      context: OrdersService
+      context: .
+      dockerfile: ./OrdersService/Dockerfile
     depends_on:
       rabbit-mq:
         condition: service_healthy
