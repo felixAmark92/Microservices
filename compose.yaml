@@ -62,6 +62,15 @@
         condition: service_healthy
     environment:
       InventoryService_ConnectionString: "Server=inventory-sql;Database=InventoryDb;User Id=sa;Password=SuperSafePass.123;TrustServerCertificate=True;"
+    
+  service-a:
+    build:
+      context: .
+      dockerfile: ServiceA/Dockerfile
+    depends_on:
+      rabbit-mq:
+        condition: service_healthy
+    
 
 volumes:
   inventory_data: {}

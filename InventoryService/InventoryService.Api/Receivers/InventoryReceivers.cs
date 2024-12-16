@@ -2,11 +2,9 @@ using System.Text;
 using System.Text.Json;
 using InventoryService.Api.MessageQueue;
 using InventoryService.Api.Service;
-using InventoryService.DataAccess.Models;
-using InventoryService.DataAccess.Repositories;
 using InventoryService.Dtos;
+using Microsoft.AspNetCore.Http.HttpResults;
 using RabbitMQ.Client.Events;
-using WebShop.UnitOfWork;
 
 namespace InventoryService.Api.Receivers;
 
@@ -14,14 +12,15 @@ public static class InventoryReceivers
 {
     public static async Task<WebApplication> MapRabbitMqReceiver(this WebApplication app, RabbitMqReceiver rabbitMqReceiver)
     {
-
-        await rabbitMqReceiver.OnReceived("product-added", (o, args) =>
+        //lidl dependency injection
+        var inventoryService = app.Services.GetRequiredService<IInventoryService>();
+        
+        await rabbitMqReceiver.OnReceived("product-added", async (o, args) =>
         {
-            var inventoryService = app.Services.GetRequiredService<IInventoryService>();
             var newProduct = GetMessageDeserialized<InventoryDto>(args);
-            inventoryService.AddInventory(newProduct);
-            return Task.CompletedTask;
+            await inventoryService.AddInventory(newProduct);
         });
+        
         return app;
     }
 

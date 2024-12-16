@@ -1,4 +1,4 @@
-using InventoryService.Api.MessageQueue;
+using InventoryService.Api.Service;
 using InventoryService.DataAccess;
 using InventoryService.DataAccess.Repositories;
 using ServiceA;
@@ -15,7 +15,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<IInventoryRepository, InventoryRepository>()
             .AddSingleton<RabbitMqConnection>()
             .AddScoped<RabbitMqProducer>()
-            .AddSingleton<RabbitMqReceiver>();
+            .AddScoped<IInventoryService, Service.InventoryService>();
             
         return services;
     }

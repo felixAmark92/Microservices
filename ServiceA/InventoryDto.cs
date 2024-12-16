@@ -1,6 +1,6 @@
-namespace InventoryService.Dtos;
+namespace ServiceA;
 
-public record InventoryDto
+public class InventoryDto
 {
     public int ProductId { get; set; }
     public int Quantity { get; set; }

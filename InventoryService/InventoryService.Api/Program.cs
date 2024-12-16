@@ -4,6 +4,7 @@ using InventoryService.Api.MessageQueue;
 using InventoryService.Api.Receivers;
 using InventoryService.DataAccess;
 using Microsoft.EntityFrameworkCore;
+using ServiceA;
 
 var loggerFactory = LoggerFactory.Create(builder =>
 {
@@ -41,7 +42,10 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.MapInventoryEndpoints();
-var rabbitMqReceiver = app.Services.GetRequiredService<RabbitMqReceiver>();
+var rabbitConnection = app.Services.GetRequiredService<RabbitMqConnection>();
+await rabbitConnection.InitializeConnection();
+await using var channel = await rabbitConnection.Connection!.CreateChannelAsync();
+var rabbitMqReceiver = new RabbitMqReceiver(channel);
 await app.MapRabbitMqReceiver(rabbitMqReceiver);
 app.Run();
 

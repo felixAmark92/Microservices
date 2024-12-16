@@ -19,29 +19,13 @@ public static class InventoryEndpoints
         app.MapGet("/inventory/all", (IInventoryService inventoryService) => 
             inventoryService.GetAllInventories());
         
-        app.MapPost("/inventory/add-quantity", AddQuantity);
-        app.MapPost("/inventory/remove-quantity", RemoveQuantity);
+        app.MapPost("/inventory/remove-quantity", (InventoryDto inventoryDto, IInventoryService inventoryService)=>
+            inventoryService.RemoveFromProductQuantity(inventoryDto));
+        
+        app.MapPost("/inventory/add-quantity", (InventoryDto inventoryDto, IInventoryService inventoryService)=>
+            inventoryService.AddToProductQuantity(inventoryDto));
+        
         return app;
     }
-    
-    private static async Task<IResult> AddQuantity(
-        InventoryDto dto, 
-        IInventoryService inventoryService)
-    {
-        return inventoryService.AddInventory(dto);
-    }
 
-    private static IResult RemoveQuantity(
-        InventoryDto dto, 
-        IInventoryRepository inventoryRepository, 
-        IUnitOfWork unitOfWork)
-    {
-        var inventory = inventoryRepository.GetInventoryByProductId(dto.ProductId);
-        if (inventory is null) 
-            return Results.NotFound();
-        
-        inventoryRepository.RemoveFromInventoryQuantity(inventory, dto.Quantity);
-        unitOfWork.CommitChanges();
-        return Results.Ok();
-    }
 }

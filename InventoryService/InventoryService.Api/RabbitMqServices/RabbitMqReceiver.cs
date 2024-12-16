@@ -1,3 +1,4 @@
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using ServiceA;
 
@@ -5,24 +6,19 @@ namespace InventoryService.Api.MessageQueue;
 
 public class RabbitMqReceiver
 {
-    private readonly RabbitMqConnection _rabbitMqConnection;
+    private readonly IChannel _channel;
 
-    public RabbitMqReceiver(RabbitMqConnection rabbitMqConnection)
+    public RabbitMqReceiver(IChannel channel)
     {
-        _rabbitMqConnection = rabbitMqConnection;
+        _channel = channel;
     }
 
-    public async Task OnReceived(string queueName, Func<object, BasicDeliverEventArgs, Task> callback)
+    public async Task OnReceived( string queueName, Func<object, BasicDeliverEventArgs, Task> callback)
     {
-        if (_rabbitMqConnection.Connection is null)
-            await _rabbitMqConnection.InitializeConnection();
-        
-        await using var channel = await _rabbitMqConnection.Connection!.CreateChannelAsync();
-        
-        await channel.QueueDeclareAsync(queueName, exclusive: false, autoDelete: true, durable: false);
-        var consumer = new AsyncEventingBasicConsumer(channel);
+        await _channel.QueueDeclareAsync(queueName, exclusive: false, autoDelete: true, durable: false);
+        var consumer = new AsyncEventingBasicConsumer(_channel);
         consumer.ReceivedAsync += callback.Invoke; 
-        await channel.BasicConsumeAsync(
+        await _channel.BasicConsumeAsync(
             queue: queueName, 
             autoAck: true, 
             consumer: consumer, 
@@ -31,6 +27,4 @@ public class RabbitMqReceiver
             exclusive: false, 
             arguments: null);
     }
-    
-    
 }

@@ -18,7 +18,7 @@ public class InventoryService : IInventoryService
         _repository = repository;
     }
 
-    public IResult AddInventory(InventoryDto inventoryDto)
+    public async Task<IResult> AddInventory(InventoryDto inventoryDto)
     {
         var entity = new InventoryEntity()
         {
@@ -26,7 +26,7 @@ public class InventoryService : IInventoryService
             Quantity = inventoryDto.Quantity,
         };
         _repository.Add(entity);
-        _unitOfWork.CommitChanges();
+        await _unitOfWork.CommitChanges();
         return Results.Ok(entity);
     }
 
@@ -54,11 +54,15 @@ public class InventoryService : IInventoryService
         await _unitOfWork.CommitChanges();
         return Results.Ok();
     }
-    
+
+    public Task<IResult> RemoveFromProductQuantity(InventoryDto inventoryDto)
+    {
+        throw new NotImplementedException();
+    }
+
     public IResult GetAllInventories()
     {
         var inventories = _repository.GetAll();
-
         var dtos = inventories.Select(i => new InventoryDto
         {
             ProductId = i.ProductId,
