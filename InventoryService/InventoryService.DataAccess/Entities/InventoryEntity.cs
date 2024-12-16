@@ -1,4 +1,3 @@
-using WebShop;
 
 namespace InventoryService.DataAccess.Entities;
 
