@@ -1,6 +1,5 @@
-using WebShop;
 
-namespace InventoryService.DataAccess.Models;
+namespace InventoryService.DataAccess.Entities;
 
 public class InventoryEntity : IEntity<int>
 {

@@ -1,5 +1,4 @@
-using InventoryService.DataAccess.Models;
-using WebShop.Repositories;
+using InventoryService.DataAccess.Entities;
 
 namespace InventoryService.DataAccess.Repositories;
 

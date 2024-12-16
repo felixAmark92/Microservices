@@ -1,4 +1,4 @@
-namespace WebShop;
+namespace InventoryService.DataAccess;
 
 public interface IEntity<TId>
 {

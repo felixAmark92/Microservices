@@ -17,7 +17,12 @@ app.MapGet("/api/service-a/hello", () => "Hello from service A");
 
 app.MapGet("/api/service-a/hello-to-b", async (RabbitMqProducer producer) =>
 {
-    await producer.SendMessage("Hello from service A");
+    var test = new InventoryDto()
+    {
+        ProductId = 1,
+        Quantity = 10,
+    };
+    await producer.SendMessage(test);
     return "Successfully sent log to service B";
 });
 

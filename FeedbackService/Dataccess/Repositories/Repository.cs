@@ -9,7 +9,7 @@ namespace Dataccess.Repositories
         private readonly FeedbackDbContext _context;
         private readonly DbSet<T> _dbSet;
 
-        public Repository(FeedbackDbContext context, DbSet<T> dbSet)
+        public Repository(FeedbackDbContext context)
         {
             _context = context;
             _dbSet = context.Set<T>();
