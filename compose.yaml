@@ -15,12 +15,15 @@
         condition: service_healthy
 
   feedback-service:
-    build:
-      context: FeedbackService
+    image : bumblez/labb2cleancode-feedback-service
+    container_name: FeedbackService
     depends_on:
-      - feedback-sql
+        - feedbacksql
     ports:
-      - "5006:8080"
+        - "5006:8080"
+    environment:
+      ConnectionStrings_DefaultConnection: "Server=feedbacksql;Database=MyDatabase;User Id=sa;Password=SuperSafePass123;TrustServerCertificate=True;"
+
 
   gateway:
     build:
@@ -42,16 +45,16 @@
     volumes:
       - inventory_data:/var/opt/mssql/data
 
-  feedback-sql:
+  feedbacksql:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: feedback-sql
+    container_name: feedbacksql
     ports:
       - "1434:1433"
     environment:
-      SA_PASSWORD: "SuperSafePass.123"
+      SA_PASSWORD: "SuperSafePass123"
       ACCEPT_EULA: "Y"
     volumes:
-      - feedback-volume:/var/opt/mssql
+      - feedback_volume:/var/opt/mssql
 
   inventory-service:
     image: felixamark/inventory-service
@@ -77,6 +80,6 @@
 
 volumes:
   inventory_data: {}
-  feedback-volume: {}
+  feedback_volume: {}
 
 
