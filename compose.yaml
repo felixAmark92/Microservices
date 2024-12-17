@@ -73,8 +73,8 @@
       - feedback-volume:/var/opt/mssql
 
   inventory-service:
-    image: felixamark/inventory-service
-    container_name: inventory-service
+    image: felixamark/inventoryservice
+    container_name: inventoryservice
     depends_on:
       inventory-sql:
         condition: service_started
