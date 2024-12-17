@@ -20,7 +20,7 @@ jobs:
       run: docker login -u felixamark -p ${{secrets.DOCKER_HUB_TOKEN}}
     
     - name: Build Docker image
-      run: docker build -t felixamark/gateway:latest .
+      run: docker build -t felixamark/gateway:latest -f ./Gateway/Dockerfile .
     - name: Push Docker image
       run: docker push felixamark/gateway:latest
 
