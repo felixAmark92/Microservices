@@ -7,13 +7,30 @@
       timeout: 3s
       retries: 5
 
-  api-orders:
-    build:
-      context: OrdersService
+  orders-api:
+    image: izabelarad/smartcafeteriaorders
+    container_name: orders-api
+    ports:
+      - "5002:8080"
     depends_on:
+      orders-sql:
+        condition: service_started
       rabbit-mq:
         condition: service_healthy
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=orders-sql;Database=OrderDb;User Id=sa;Password=Password123;TrustServerCertificate=True;"
 
+  orders-sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: orders-sql
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "Password123"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - order_data:/var/opt/mssql/data
+      
   feedback-service:
     build:
       context: FeedbackService
@@ -31,7 +48,7 @@
     depends_on:
       - feedback-service
       - inventory-service
-      - api-orders
+      - orders-api
 
   inventory-sql:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -65,7 +82,7 @@
       InventoryService_ConnectionString: "Server=inventory-sql;Database=InventoryDb;User Id=sa;Password=SuperSafePass.123;TrustServerCertificate=True;"
     ports:
       - "5001:8080"
-    
+
   service-a:
     build:
       context: .
@@ -73,10 +90,11 @@
     depends_on:
       rabbit-mq:
         condition: service_healthy
-    
+
 
 volumes:
   inventory_data: {}
   feedback-volume: {}
+  order_data: {}
 
 
