@@ -10,6 +10,7 @@
   orders-api:
     image: izabelarad/smartcafeteriaorders
     container_name: orders-api
+    user: root
     ports:
       - "5002:8080"
     depends_on:
@@ -53,11 +54,12 @@
   inventory-sql:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: inventory-sql
+    user: root
     environment:
       SA_PASSWORD: "SuperSafePass.123"
       ACCEPT_EULA: "Y"
     volumes:
-      - inventory_data:/var/opt/mssql/data
+      - inventory_data:/var/opt/mssql
 
   feedback-sql:
     image: mcr.microsoft.com/mssql/server:2022-latest
