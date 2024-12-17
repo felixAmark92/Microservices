@@ -42,5 +42,15 @@
     environment:
       InventoryService_ConnectionString: "Server=sqlserver;Database=MyDatabase;User Id=sa;Password=SuperSafePass.123;TrustServerCertificate=True;"
 
+  productservice:
+    image: tiiva/productservice:latest
+    container_name: productservice
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ProductService_ConnectionString="Server=sqlserver;Database=MyDatabase;User Id=sa;Password=SuperSafePass123;TrustServerCertificate=True;"
+    depends_on:
+      - sqlserver
 volumes:
   sqlserver_data:
