@@ -37,15 +37,15 @@
       "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
     },
     {
-      "DownstreamPathTemplate": "/orders/{id}",
+      "DownstreamPathTemplate": "/orders/{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "orders-api",
-          "Port": 5002
+          "Port": 8080
         }
       ],
-      "UpstreamPathTemplate": "/orders/{id}",
+      "UpstreamPathTemplate": "/orders/{everything}",
       "UpstreamHttpMethod": [ "GET", "DELETE"]
     },
     {
