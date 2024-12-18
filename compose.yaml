@@ -2,36 +2,75 @@
   rabbit-mq:
     image: rabbitmq:4.0-management
     healthcheck:
-      test: ["CMD", "rabbitmqctl", "status"]
+      test: [ "CMD", "rabbitmqctl", "status" ]
       interval: 5s
       timeout: 3s
       retries: 5
-  
-        
-  api-orders:
-    build:
-      context: OrdersService
+
+  orders-api:
+    image: izabelarad/smartcafeteriaorders
+    container_name: orders-api
+    user: root
+    ports:
+      - "5002:8080"
     depends_on:
+      orders-sql:
+        condition: service_started
       rabbit-mq:
-       condition: service_healthy
-       
+        condition: service_healthy
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=orders-sql;Database=OrderDb;User Id=sa;Password=Password123;TrustServerCertificate=True;"
+
+  orders-sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: orders-sql
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "Password123"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - order_data:/var/opt/mssql/data
+      
+  feedback-service:
+    build:
+      context: FeedbackService
+    depends_on:
+      - feedback-sql
+    ports:
+      - "5006:8080"
+
   gateway:
     build:
       context: .
       dockerfile: ./Gateway/Dockerfile
     ports:
       - "5003:8080"
+    depends_on:
+      - feedback-service
+      - inventory-service
+      - orders-api
 
-  sqlserver:
+  inventory-sql:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: sqlserver
-    ports:
-      - "1433:1433"
+    container_name: inventory-sql
+    user: root
     environment:
       SA_PASSWORD: "SuperSafePass.123"
       ACCEPT_EULA: "Y"
     volumes:
-      - sqlserver_data:/var/opt/mssqlMyDatabase
+      - inventory_data:/var/opt/mssql
+
+  feedback-sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: feedback-sql
+    ports:
+      - "1434:1433"
+    environment:
+      SA_PASSWORD: "SuperSafePass.123"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - feedback-volume:/var/opt/mssql
 
   productsqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -45,13 +84,26 @@
       - product_volume:/var/opt/mssql
 
   inventory-service:
-    build:
-      context: InventoryService
-      dockerfile: Dockerfile
+    image: felixamark/inventoryservice
+    container_name: inventoryservice
     depends_on:
-      - sqlserver
+      inventory-sql:
+        condition: service_started
+      rabbit-mq:
+        condition: service_healthy
     environment:
-      InventoryService_ConnectionString: "Server=sqlserver;Database=MyDatabase;User Id=sa;Password=SuperSafePass.123;TrustServerCertificate=True;"
+      InventoryService_ConnectionString: "Server=inventory-sql;Database=InventoryDb;User Id=sa;Password=SuperSafePass.123;TrustServerCertificate=True;"
+    ports:
+      - "5001:8080"
+
+  service-a:
+    build:
+      context: .
+      dockerfile: ServiceA/Dockerfile
+    depends_on:
+      rabbit-mq:
+        condition: service_healthy
+
 
   productservice:
     image: tiiva/productservice:latest
@@ -67,5 +119,8 @@
       rabbit-mq:
         condition: service_healthy
 volumes:
-  sqlserver_data:
-  product_volume:  
+  inventory_data: {}
+  feedback-volume: {}
+  order_data: {}
+
+

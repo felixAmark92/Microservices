@@ -1,12 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryService.Api", "InventoryService.Api\InventoryService.Api.csproj", "{21A58F93-2A9E-4EE3-B87F-0B806FBA7D83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryService.Api", "InventoryService.Api\InventoryService.Api.csproj", "{43B76C41-AF9B-43B2-BC17-A3385AC4C283}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryService.DataAccess", "InventoryService.DataAccess\InventoryService.DataAccess.csproj", "{A3967EEA-ED6D-4FBA-9713-1DFC16D3AAE9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryService.DataAccess", "InventoryService.DataAccess\InventoryService.DataAccess.csproj", "{91C25646-7C33-489D-8D3A-ECBA47E2AF91}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{77F79B28-E2D9-438F-A7FC-9B16654F3855}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{469FFA16-63AF-4F1F-BDB0-406F150C053A}"
 	ProjectSection(SolutionItems) = preProject
-		compose.yml = compose.yml
+		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject
 Global
@@ -15,13 +15,13 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{21A58F93-2A9E-4EE3-B87F-0B806FBA7D83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{21A58F93-2A9E-4EE3-B87F-0B806FBA7D83}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{21A58F93-2A9E-4EE3-B87F-0B806FBA7D83}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{21A58F93-2A9E-4EE3-B87F-0B806FBA7D83}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A3967EEA-ED6D-4FBA-9713-1DFC16D3AAE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A3967EEA-ED6D-4FBA-9713-1DFC16D3AAE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A3967EEA-ED6D-4FBA-9713-1DFC16D3AAE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A3967EEA-ED6D-4FBA-9713-1DFC16D3AAE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43B76C41-AF9B-43B2-BC17-A3385AC4C283}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43B76C41-AF9B-43B2-BC17-A3385AC4C283}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43B76C41-AF9B-43B2-BC17-A3385AC4C283}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43B76C41-AF9B-43B2-BC17-A3385AC4C283}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91C25646-7C33-489D-8D3A-ECBA47E2AF91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91C25646-7C33-489D-8D3A-ECBA47E2AF91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91C25646-7C33-489D-8D3A-ECBA47E2AF91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91C25646-7C33-489D-8D3A-ECBA47E2AF91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

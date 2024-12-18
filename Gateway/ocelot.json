@@ -1,43 +1,61 @@
 {
   "Routes": [
     {
+      "DownstreamPathTemplate": "/api/feedback{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "feedback-service",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/feedback{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE" ]
+    },
+    {
       "DownstreamPathTemplate": "/inventory{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
-        { "Host": "inventory-service", "Port": 8080 }
+        {
+          "Host": "inventory-service",
+          "Port": 8080
+        }
       ],
       "UpstreamPathTemplate": "/inventory{everything}",
-      "UpstreamHttpMethod": [ "POST" ]
+      "UpstreamHttpMethod": [ "GET","POST" ]
     },
     {
-      "DownstreamPathTemplate": "/api/orders",
+      "DownstreamPathTemplate": "/orders",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "api-orders",
+          "Host": "orders-api",
           "Port": 8080
         }
       ],
-      "UpstreamPathTemplate": "/api/orders",
-      "UpstreamHttpMethod": [ "GET", "POST" ]
+      "UpstreamPathTemplate": "/orders",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
     },
     {
-      "DownstreamPathTemplate": "/products{everything}",
+      "DownstreamPathTemplate": "/orders/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "productservice",
-          "Port": 8080
+          "Host": "orders-api",
+          "Port": 5002
         }
       ],
-      "UpstreamPathTemplate": "/products{everything}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
+      "UpstreamPathTemplate": "/orders/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE"]
     },
     {
       "DownstreamPathTemplate": "/api/service-a{everything}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
-        { "Host": "service-a", "Port": 8080 }
+        {
+          "Host": "service-a",
+          "Port": 8080
+        }
       ],
       "UpstreamPathTemplate": "/api/service-a{everything}",
       "UpstreamHttpMethod": [ "GET" ]
@@ -46,7 +64,10 @@
       "DownstreamPathTemplate": "/api/service-b",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
-        { "Host": "service-b", "Port": 8080}
+        {
+          "Host": "service-b",
+          "Port": 8080
+        }
       ],
       "UpstreamPathTemplate": "/api/service-b",
       "UpstreamHttpMethod": [ "GET" ]
@@ -55,7 +76,10 @@
       "DownstreamPathTemplate": "/index",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
-        { "Host": "service-a", "Port": 8080 }
+        {
+          "Host": "service-a",
+          "Port": 8080
+        }
       ],
       "UpstreamPathTemplate": "/",
       "UpstreamHttpMethod": [ "GET" ]

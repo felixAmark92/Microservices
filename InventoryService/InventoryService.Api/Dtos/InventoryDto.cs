@@ -1,6 +1,6 @@
-namespace InventoryService.Dtos;
+namespace InventoryService.Api.Dtos;
 
-public class InventoryDto
+public record InventoryDto
 {
     public int ProductId { get; set; }
     public int Quantity { get; set; }

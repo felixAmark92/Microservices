@@ -1,7 +1,3 @@
-using WebShop;
-using WebShop.Repositories;
-using WebShop.UnitOfWork;
-
 namespace InventoryService.DataAccess.Repositories;
 
 public abstract class BaseRepository<TModel, TId> 

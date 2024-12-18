@@ -1,4 +1,4 @@
-using InventoryService.DataAccess.Models;
+using InventoryService.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace InventoryService.DataAccess;
