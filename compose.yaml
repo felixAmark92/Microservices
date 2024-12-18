@@ -99,7 +99,7 @@
 
 volumes:
   inventory_data: {}
-  feedback-volume: {}
+  feedback_volume: {}
   order_data: {}
 
 
