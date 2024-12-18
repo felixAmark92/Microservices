@@ -25,16 +25,28 @@
       "UpstreamHttpMethod": [ "GET","POST" ]
     },
     {
-      "DownstreamPathTemplate": "/api/orders",
+      "DownstreamPathTemplate": "/orders",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "api-orders",
+          "Host": "orders-api",
           "Port": 8080
         }
       ],
-      "UpstreamPathTemplate": "/api/orders",
-      "UpstreamHttpMethod": [ "GET", "POST" ]
+      "UpstreamPathTemplate": "/orders",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/orders/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "orders-api",
+          "Port": 5002
+        }
+      ],
+      "UpstreamPathTemplate": "/orders/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE"]
     },
     {
       "DownstreamPathTemplate": "/api/service-a{everything}",
@@ -47,6 +59,18 @@
       ],
       "UpstreamPathTemplate": "/api/service-a{everything}",
       "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/products{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "productservice",
+          "Port": 8080
+        }
+      ],
+      "UpstreamPathTemplate": "/products{everything}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ]
     },
     {
       "DownstreamPathTemplate": "/api/service-b",
