@@ -53,6 +53,7 @@
       - feedback-service
       - inventory-service
       - orders-api
+      - productservice 
 
   inventory-sql:
     image: mcr.microsoft.com/mssql/server:2022-latest
