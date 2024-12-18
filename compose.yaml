@@ -2,36 +2,47 @@
   rabbit-mq:
     image: rabbitmq:4.0-management
     healthcheck:
-      test: ["CMD", "rabbitmqctl", "status"]
+      test: [ "CMD", "rabbitmqctl", "status" ]
       interval: 5s
       timeout: 3s
       retries: 5
-      
 
+  orders-api:
+    image: izabelarad/smartcafeteriaorders
+    container_name: orders-api
+    user: root
+    ports:
+      - "5002:8080"
+    depends_on:
+      orders-sql:
+        condition: service_started
+      rabbit-mq:
+        condition: service_healthy
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=orders-sql;Database=OrderDb;User Id=sa;Password=Password123;TrustServerCertificate=True;"
+
+  orders-sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: orders-sql
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "Password123"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - order_data:/var/opt/mssql/data
+      
   feedback-service:
-    build:
-      context: .
-      dockerfile: ./FeedbackService/Dockerfile
+    image : bumblez/labb2cleancode-feedback-service
+    container_name: FeedbackService
     depends_on:
-      rabbit-mq:
-        condition: service_healthy
-  
-  service-a:
-    build:
-      context: .
-      dockerfile: ./ServiceA/Dockerfile
-    depends_on:
-      rabbit-mq:
-        condition: service_healthy
-  
-  service-b:
-    build:
-      context: .
-      dockerfile: ./ServiceB/Dockerfile
-    depends_on:
-      rabbit-mq:
-        condition: service_healthy
-  
+        - feedbacksql
+    ports:
+        - "5006:8080"
+    environment:
+      ConnectionStrings_DefaultConnection: "Server=feedbacksql;Database=MyDatabase;User Id=sa;Password=SuperSafePass123;TrustServerCertificate=True;"
+
+
   gateway:
     build:
       context: .
@@ -39,6 +50,81 @@
     ports:
       - "5003:8080"
     depends_on:
-      - service-a
-      - service-b
-      - feedback-service 
+      - feedback-service
+      - inventory-service
+      - orders-api
+      - productservice 
+
+  inventory-sql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: inventory-sql
+    user: root
+    environment:
+      SA_PASSWORD: "SuperSafePass.123"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - inventory_data:/var/opt/mssql
+
+  feedbacksql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: feedbacksql
+    ports:
+      - "1434:1433"
+    environment:
+      SA_PASSWORD: "SuperSafePass123"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - feedback_volume:/var/opt/mssql
+
+  productsqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: productsqlserver
+    ports:
+      - "1435:1433"
+    environment:
+      SA_PASSWORD: "SuperSafePass123"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - product_volume:/var/opt/mssql
+
+  inventory-service:
+    image: felixamark/inventoryservice
+    container_name: inventoryservice
+    depends_on:
+      inventory-sql:
+        condition: service_started
+      rabbit-mq:
+        condition: service_healthy
+    environment:
+      InventoryService_ConnectionString: "Server=inventory-sql;Database=InventoryDb;User Id=sa;Password=SuperSafePass.123;TrustServerCertificate=True;"
+    ports:
+      - "5001:8080"
+
+  service-a:
+    build:
+      context: .
+      dockerfile: ServiceA/Dockerfile
+    depends_on:
+      rabbit-mq:
+        condition: service_healthy
+
+
+  productservice:
+    image: tiiva/productservice:latest
+    container_name: productservice
+    ports:
+      - "8080:8080"
+    environment:
+        ConnectionStrings__DefaultConnection: "Server=productsqlserver;Database=MyDatabase;User Id=sa;Password=SuperSafePass123;TrustServerCertificate=True;"
+    depends_on:
+      productsqlserver:
+        condition: service_started
+      rabbit-mq:
+        condition: service_healthy
+volumes:
+  inventory_data: {}
+  feedback_volume: {}
+  order_data: {}
+  product_volume: {}
+
+
