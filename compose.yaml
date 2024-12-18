@@ -75,6 +75,17 @@
     volumes:
       - feedback_volume:/var/opt/mssql
 
+  productsqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: productsqlserver
+    ports:
+      - "1435:1433"
+    environment:
+      SA_PASSWORD: "SuperSafePass123"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - product_volume:/var/opt/mssql
+
   inventory-service:
     image: felixamark/inventoryservice
     container_name: inventoryservice
@@ -97,9 +108,22 @@
         condition: service_healthy
 
 
+  productservice:
+    image: tiiva/productservice:latest
+    container_name: productservice
+    ports:
+      - "8080:8080"
+    environment:
+        ConnectionStrings__DefaultConnection: "Server=productsqlserver;Database=MyDatabase;User Id=sa;Password=SuperSafePass123;TrustServerCertificate=True;"
+    depends_on:
+      productsqlserver:
+        condition: service_started
+      rabbit-mq:
+        condition: service_healthy
 volumes:
   inventory_data: {}
   feedback_volume: {}
   order_data: {}
+  product_volume: {}
 
 
