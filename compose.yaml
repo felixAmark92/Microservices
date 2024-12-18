@@ -4,8 +4,8 @@
     healthcheck:
       test: [ "CMD", "rabbitmqctl", "status" ]
       interval: 5s
-      timeout: 3s
-      retries: 5
+      timeout: 10s
+      retries: 10
 
   orders-api:
     image: izabelarad/smartcafeteriaorders
@@ -45,9 +45,9 @@
 
 
   gateway:
-    build:
-      context: .
-      dockerfile: ./Gateway/Dockerfile
+    image: felixamark/gateway
+    container_name: gateway
+    user: root
     ports:
       - "5003:8080"
     depends_on:
