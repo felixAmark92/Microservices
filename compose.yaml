@@ -33,6 +33,17 @@
     volumes:
       - sqlserver_data:/var/opt/mssqlMyDatabase
 
+  productsqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: productsqlserver
+    ports:
+      - "1434:1433"
+    environment:
+      SA_PASSWORD: "SuperSafePass123"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - product_volume:/var/opt/mssql
+
   inventory-service:
     build:
       context: InventoryService
@@ -49,8 +60,12 @@
       - "8080:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ProductService_ConnectionString="Server=sqlserver;Database=MyDatabase;User Id=sa;Password=SuperSafePass123;TrustServerCertificate=True;"
+      - ProductService_ConnectionString="Server=productsqlserver;Database=MyDatabase;User Id=sa;Password=SuperSafePass123;TrustServerCertificate=True;"
     depends_on:
-      - sqlserver
+      productsqlserver:
+        condition: service_started
+      rabbit-mq:
+        condition: service_healthy
 volumes:
   sqlserver_data:
+  product_volume:  
