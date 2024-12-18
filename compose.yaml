@@ -24,6 +24,7 @@
   orders-sql:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: orders-sql
+    user: root
     ports:
       - "1433:1433"
     environment:
@@ -40,7 +41,7 @@
     ports:
         - "5006:8080"
     environment:
-      ConnectionStrings_DefaultConnection: "Server=feedbacksql;Database=MyDatabase;User Id=sa;Password=SuperSafePass123;TrustServerCertificate=True;"
+      ConnectionStrings_DefaultConnection: "Server=feedbacksql;Database=FeedbackDatabase;User Id=sa;Password=SuperSafePass123;TrustServerCertificate=True;"
 
 
   gateway:
