@@ -4,8 +4,8 @@
     healthcheck:
       test: [ "CMD", "rabbitmqctl", "status" ]
       interval: 5s
-      timeout: 10s
-      retries: 10
+      timeout: 15s
+      retries: 15
 
   orders-api:
     image: izabelarad/smartcafeteriaorders
@@ -100,15 +100,6 @@
       InventoryService_ConnectionString: "Server=inventory-sql;Database=InventoryDb;User Id=sa;Password=SuperSafePass.123;TrustServerCertificate=True;"
     ports:
       - "5001:8080"
-
-  service-a:
-    build:
-      context: .
-      dockerfile: ServiceA/Dockerfile
-    depends_on:
-      rabbit-mq:
-        condition: service_healthy
-
 
   productservice:
     image: tiiva/productservice:latest
